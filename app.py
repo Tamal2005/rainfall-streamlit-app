@@ -1619,7 +1619,7 @@ def render_knnr_validation_tab():
     run_val = st.button(
         "📊 Run validation",
         type="primary",
-        use_container_width=True,
+        width="stretch",
         key="run_validation",
     )
 
@@ -1700,7 +1700,7 @@ def render_knnr_validation_tab():
         ],
     })
 
-    st.dataframe(summary, use_container_width=True, hide_index=True)
+    st.dataframe(summary, width="stretch", hide_index=True)
 
     beats_naive = results_df["mae"].mean() < results_df["naive_mae"].mean()
 
@@ -1736,7 +1736,7 @@ def render_knnr_validation_tab():
         data=csv_data,
         file_name=f"knnr_validation_{window}day.csv",
         mime="text/csv",
-        use_container_width=True,
+        width="stretch",
     )
 
     # --------------------------------------------------------
@@ -1797,7 +1797,7 @@ def render_knnr_validation_tab():
     ax.legend(fontsize=8)
     ax.grid(alpha=0.15)
 
-    st.pyplot(fig, use_container_width=True)
+    st.pyplot(fig, width="stretch")
     plt.close(fig)
 
     day_row = results_df[results_df["date"] == chosen_date].iloc[0]
@@ -1978,7 +1978,7 @@ with st.sidebar:
     run = st.button(
         "🔮 Predict weather",
         type="primary",
-        use_container_width=True,
+        width="stretch",
     )
 
     st.caption(
@@ -2108,7 +2108,7 @@ with tab_predict:
                     "Elevation: {elevation} m"
             },
         ),
-        use_container_width=True,
+        width="stretch",
     )
 
 
@@ -2396,7 +2396,7 @@ with tab_predict:
 
                 st.pyplot(
                     fig,
-                    use_container_width=True,
+                    width="stretch",
                 )
 
                 plt.close(fig)
@@ -2495,7 +2495,7 @@ with tab_predict:
 
                     st.dataframe(
                         pd.DataFrame(detail_rows),
-                        use_container_width=True,
+                        width="stretch",
                         hide_index=True,
                     )
 
@@ -2567,7 +2567,7 @@ with tab_predict:
 
                 st.dataframe(
                     hourly_table,
-                    use_container_width=True,
+                    width="stretch",
                     hide_index=True,
                 )
 
@@ -2590,7 +2590,7 @@ with tab_predict:
                         f"{date_str}.csv"
                     ),
                     mime="text/csv",
-                    use_container_width=True,
+                    width="stretch",
                 )
 
                 # ----------------------------------------------------
@@ -2618,7 +2618,7 @@ with tab_predict:
 
                         st.dataframe(
                             pd.DataFrame(analogue_rows),
-                            use_container_width=True,
+                            width="stretch",
                             hide_index=True,
                         )
 
@@ -2753,7 +2753,7 @@ with tab_predict:
 
         st.dataframe(
             location_df,
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
         )
 
