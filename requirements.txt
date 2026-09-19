@@ -6,7 +6,4 @@ scikit-learn==1.6.1
 joblib==1.5.3
 pyarrow==18.1.0
 pydeck
-<<<<<<< HEAD
 gdown
-=======
->>>>>>> bd40be851e8e483cc35bff30a2f824cd0f5e0b03
