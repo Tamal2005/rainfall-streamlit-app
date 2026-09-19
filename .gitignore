@@ -1,1 +1,5 @@
 .venv
+/disaggregation_knnr/
+/fragments/
+/models/
+/prepped/
