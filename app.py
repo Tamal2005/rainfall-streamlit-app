@@ -12,7 +12,6 @@ from pathlib import Path
 
 import pydeck as pdk
 import matplotlib.pyplot as plt
-import gdown
 
 
 st.set_page_config(
@@ -52,67 +51,15 @@ st.markdown(
 )
 
 
-APP_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent
 
-GDRIVE_FOLDER_ID = st.secrets.get("GDRIVE_FOLDER_ID", "1H3N_Ky7kOzG6CXmchUK1ko5UVUMrVyis")
-GDRIVE_CACHE_DIR = APP_DIR / "_gdrive_data"
-
-REQUIRED_MARKERS = [
-    "prepped/district_lookup.parquet",
-    "models/feature_cols.pkl",
-    "disaggregation_knnr/knnr_3day.parquet",
-    "disaggregation_knnr/knnr_5day.parquet",
-    "disaggregation_knnr/knnr_7day.parquet",
-]
-
-
-def _is_project_root(d):
-    return all((Path(d) / m).exists() for m in REQUIRED_MARKERS)
-
-
-def _find_project_root(root):
-    root = Path(root)
-    if not root.exists():
-        return None
-    for d in [root] + [p for p in root.rglob("*") if p.is_dir()]:
-        if _is_project_root(d):
-            return d
-    return None
-
-
-@st.cache_resource(show_spinner="Downloading data from Google Drive (first run only)...")
-def ensure_base_dir():
-    if _is_project_root(APP_DIR):
-        return str(APP_DIR)
-
-    found = _find_project_root(GDRIVE_CACHE_DIR)
-    if found:
-        return str(found)
-
-    GDRIVE_CACHE_DIR.mkdir(exist_ok=True)
-    gdown.download_folder(
-        url=f"https://drive.google.com/drive/folders/{GDRIVE_FOLDER_ID}",
-        output=str(GDRIVE_CACHE_DIR),
-        quiet=True,
-        use_cookies=False,
-    )
-
-    found = _find_project_root(GDRIVE_CACHE_DIR)
-    if not found:
-        raise RuntimeError(
-            "Download finished but the expected files were not found. "
-            "The Drive folder must contain prepped/, models/ and "
-            "disaggregation_knnr/, and be shared as 'Anyone with the link'."
-        )
-    return str(found)
-
-
-try:
-    BASE_DIR = Path(ensure_base_dir())
-except Exception as e:
-    st.error("Could not get the app data from Google Drive.")
-    st.code(str(e))
-    st.stop()
+# ------------------------------------------------------------
+# Data files (prepped/, models/, disaggregation_knnr/) are
+# committed directly into this repo, right next to app.py --
+# no download step needed. st.secrets overrides are still
+# supported if you ever want to point at a different location
+# without changing code (e.g. a mounted volume).
+# ------------------------------------------------------------
 
 DATA_DIR = Path(st.secrets.get("DATA_DIR", BASE_DIR / "prepped"))
 MODEL_DIR = Path(st.secrets.get("MODEL_DIR", BASE_DIR / "models"))
