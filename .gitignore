@@ -1,5 +1,6 @@
 .venv
-/disaggregation_knnr/
 /fragments/
-/models/
-/prepped/
+/prepped/train.parquet
+/prepped/test.parquet
+/prepped/val.parquet
+
