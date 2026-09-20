@@ -9,7 +9,6 @@ import difflib
 
 from datetime import datetime
 from pathlib import Path
-import tempfile
 
 import pydeck as pdk
 import matplotlib.pyplot as plt
@@ -56,7 +55,7 @@ st.markdown(
 APP_DIR = Path(__file__).resolve().parent
 
 GDRIVE_FOLDER_ID = st.secrets.get("GDRIVE_FOLDER_ID", "1H3N_Ky7kOzG6CXmchUK1ko5UVUMrVyis")
-GDRIVE_CACHE_DIR = Path(tempfile.gettempdir()) / "rainfall_app_gdrive_data"
+GDRIVE_CACHE_DIR = APP_DIR / "_gdrive_data"
 
 REQUIRED_MARKERS = [
     "prepped/district_lookup.parquet",
