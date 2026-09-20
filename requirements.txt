@@ -7,5 +7,3 @@ joblib==1.5.3
 pyarrow==18.1.0
 pydeck
 matplotlib
-requests
-gdown
